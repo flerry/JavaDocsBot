@@ -20,11 +20,11 @@ public class TgBot extends TelegramLongPollingBot {
 	}
 
 	public String getBotUsername() {
-		return "JavaDocBot";
+		return "your_bot_name";
 	}
 
 	public String getBotToken() {
-		return "297793566:AAFL_MphiG7gDin6CP97lTPR8_Z4Y_r3soA";
+		return "your_token";
 	}
 
 	public void onUpdateReceived(Update update) {
