@@ -20,7 +20,7 @@ public class TgBot extends TelegramLongPollingBot {
 	}
 
 	public String getBotUsername() {
-		return "JavaDocBot";
+		return "JavaDocsBot";
 	}
 
 	public String getBotToken() {
@@ -31,14 +31,17 @@ public class TgBot extends TelegramLongPollingBot {
 
 		Message message = update.getMessage();
 		if (message != null && message.hasText()) {
-			if (message.getText().contains("/help")
-					|| message.getText().equals("/start")
-					|| message.getText().equals("/help")) {
+			if (message.getText().equals("/start")
+					|| message.getText().equals("/help")
+					|| message.getText().equals("/help@JavaDocsBot")
+					|| message.getText().equals("/start@JavaDocsBot")) {
 				sendMsg(message,
 						"Привет, я JavaDocBot. Я всегда готов помочь тебе, о Java-кодер, в поиске документации :) Пожалуйста, напиши нужный класс/метод/исключение для поиска нужной документации");
 
 			}
-			if (message.getText().contains("@JavaDocsBot")) {
+			if (message.getText().contains("@JavaDocsBot")
+					&& !message.getText().equals("/help@JavaDocsBot")
+					&& !message.getText().equals("/start@JavaDocsBot")) {
 				try {
 					sendMsg(message,
 							ParseDocs.docsTextLink(message.getText()
@@ -48,7 +51,7 @@ public class TgBot extends TelegramLongPollingBot {
 											.replace("@JavaDocsBot ", "")
 											.substring(1)));
 				} catch (IOException e) {
-					e.printStackTrace();
+					sendMsg(message, "Ошибка поиска, попробуй позже");
 				} catch (IndexOutOfBoundsException a) {
 					sendMsg(message,
 							"Извини, но я не смог найти информации по твоему запросу");
@@ -65,7 +68,7 @@ public class TgBot extends TelegramLongPollingBot {
 									.substring(0, 1).toUpperCase()
 									+ message.getText().substring(1))));
 				} catch (IOException e) {
-					e.printStackTrace();
+					sendMsg(message, "Ошибка поиска, попробуй позже");
 				} catch (IndexOutOfBoundsException a) {
 					sendMsg(message,
 							"Извини, но я не смог найти информации по твоему запросу");

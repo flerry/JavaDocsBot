@@ -19,7 +19,8 @@ public class ParseDocs {
 		String allLink;
 		ArrayList<String> links = new ArrayList<String>();
 
-		Document doc = Jsoup.connect(url).get();
+		Document doc = Jsoup.connect(url).timeout(20000).get();
+
 		Elements aElements = doc.select("a[href]");
 		for (Element link : aElements) {
 			allLink = link.attr("abs:href");
@@ -36,7 +37,7 @@ public class ParseDocs {
 	public static String docsTextLink(String requestWord) throws IOException {
 
 		ParseDocs.linkParse(requestWord);
-		Document doc2 = Jsoup.connect(goodlink).get();
+		Document doc2 = Jsoup.connect(goodlink).timeout(20000).get();
 		String tElements = doc2.select("div[class=block]").first().text();
 		return "\nСсылка на документацию:" + " " + goodlink + "\n\n"
 				+ "Краткое описание:" + "\n" + tElements;
